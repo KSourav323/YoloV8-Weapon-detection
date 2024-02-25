@@ -1,14 +1,8 @@
 import time
 import cv2
 from ultralytics import YOLO
-from twilio.rest import Client
 
-account_sid = 'AC7e613443a79f459e69da555245d4c46a'
-auth_token = '1ada33a7725e1937fc3e70e3942d7662'
-twilio_phone_number = '+16592702574'
-recipient_phone_number = '+919495076875'
-
-client = Client(account_sid, auth_token)
+from sos import alert
 
 def throttle(seconds):
     def decorator(func):
@@ -28,11 +22,7 @@ def throttle(seconds):
 
 @throttle(10)
 def trigger():
-    message = client.messages.create(
-        body="GUN DETECTED.",
-        from_=twilio_phone_number,
-        to=recipient_phone_number
-    )
+    alert()
 
 
 def detect_objects_in_video(video_path):
