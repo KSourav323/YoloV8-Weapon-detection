@@ -2,7 +2,7 @@ import time
 import cv2
 from ultralytics import YOLO
 
-from sos import alert
+# from sos import alert
 
 def throttle(seconds):
     def decorator(func):
@@ -22,7 +22,8 @@ def throttle(seconds):
 
 @throttle(10)
 def trigger():
-    alert()
+    # alert()
+    pass
 
 
 def detect_objects_in_video(video_path):
@@ -37,10 +38,10 @@ def detect_objects_in_video(video_path):
 
         for result in results:
             classes = result.names
+            
             cls = result.boxes.cls
             conf = result.boxes.conf
             detections = result.boxes.xyxy
-
             for pos, detection in enumerate(detections):
                 if conf[pos] >= 0.5:
                     trigger()
